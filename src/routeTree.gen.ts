@@ -9,38 +9,181 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SourcingRouteImport } from './routes/sourcing'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as PropertyIdRouteImport } from './routes/property.$id'
+import { Route as DashboardSellerRouteImport } from './routes/dashboard.seller'
+import { Route as DashboardAgentRouteImport } from './routes/dashboard.agent'
+import { Route as DashboardAffiliatesRouteImport } from './routes/dashboard.affiliates'
 
+const SourcingRoute = SourcingRouteImport.update({
+  id: '/sourcing',
+  path: '/sourcing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentsRoute = AgentsRouteImport.update({
+  id: '/agents',
+  path: '/agents',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const PropertyIdRoute = PropertyIdRouteImport.update({
+  id: '/property/$id',
+  path: '/property/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardSellerRoute = DashboardSellerRouteImport.update({
+  id: '/seller',
+  path: '/seller',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAgentRoute = DashboardAgentRouteImport.update({
+  id: '/agent',
+  path: '/agent',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardAffiliatesRoute = DashboardAffiliatesRouteImport.update({
+  id: '/affiliates',
+  path: '/affiliates',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agents': typeof AgentsRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/search': typeof SearchRoute
+  '/sourcing': typeof SourcingRoute
+  '/dashboard/affiliates': typeof DashboardAffiliatesRoute
+  '/dashboard/agent': typeof DashboardAgentRoute
+  '/dashboard/seller': typeof DashboardSellerRoute
+  '/property/$id': typeof PropertyIdRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agents': typeof AgentsRoute
+  '/search': typeof SearchRoute
+  '/sourcing': typeof SourcingRoute
+  '/dashboard/affiliates': typeof DashboardAffiliatesRoute
+  '/dashboard/agent': typeof DashboardAgentRoute
+  '/dashboard/seller': typeof DashboardSellerRoute
+  '/property/$id': typeof PropertyIdRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agents': typeof AgentsRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/search': typeof SearchRoute
+  '/sourcing': typeof SourcingRoute
+  '/dashboard/affiliates': typeof DashboardAffiliatesRoute
+  '/dashboard/agent': typeof DashboardAgentRoute
+  '/dashboard/seller': typeof DashboardSellerRoute
+  '/property/$id': typeof PropertyIdRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/agents'
+    | '/dashboard'
+    | '/search'
+    | '/sourcing'
+    | '/dashboard/affiliates'
+    | '/dashboard/agent'
+    | '/dashboard/seller'
+    | '/property/$id'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/agents'
+    | '/search'
+    | '/sourcing'
+    | '/dashboard/affiliates'
+    | '/dashboard/agent'
+    | '/dashboard/seller'
+    | '/property/$id'
+    | '/dashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/agents'
+    | '/dashboard'
+    | '/search'
+    | '/sourcing'
+    | '/dashboard/affiliates'
+    | '/dashboard/agent'
+    | '/dashboard/seller'
+    | '/property/$id'
+    | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AgentsRoute: typeof AgentsRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
+  SearchRoute: typeof SearchRoute
+  SourcingRoute: typeof SourcingRoute
+  PropertyIdRoute: typeof PropertyIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sourcing': {
+      id: '/sourcing'
+      path: '/sourcing'
+      fullPath: '/sourcing'
+      preLoaderRoute: typeof SourcingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agents': {
+      id: '/agents'
+      path: '/agents'
+      fullPath: '/agents'
+      preLoaderRoute: typeof AgentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +191,70 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/property/$id': {
+      id: '/property/$id'
+      path: '/property/$id'
+      fullPath: '/property/$id'
+      preLoaderRoute: typeof PropertyIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/seller': {
+      id: '/dashboard/seller'
+      path: '/seller'
+      fullPath: '/dashboard/seller'
+      preLoaderRoute: typeof DashboardSellerRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/agent': {
+      id: '/dashboard/agent'
+      path: '/agent'
+      fullPath: '/dashboard/agent'
+      preLoaderRoute: typeof DashboardAgentRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/affiliates': {
+      id: '/dashboard/affiliates'
+      path: '/affiliates'
+      fullPath: '/dashboard/affiliates'
+      preLoaderRoute: typeof DashboardAffiliatesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
+interface DashboardRouteChildren {
+  DashboardAffiliatesRoute: typeof DashboardAffiliatesRoute
+  DashboardAgentRoute: typeof DashboardAgentRoute
+  DashboardSellerRoute: typeof DashboardSellerRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardAffiliatesRoute: DashboardAffiliatesRoute,
+  DashboardAgentRoute: DashboardAgentRoute,
+  DashboardSellerRoute: DashboardSellerRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AgentsRoute: AgentsRoute,
+  DashboardRoute: DashboardRouteWithChildren,
+  SearchRoute: SearchRoute,
+  SourcingRoute: SourcingRoute,
+  PropertyIdRoute: PropertyIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
