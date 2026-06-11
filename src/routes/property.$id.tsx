@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
-import { getProperty, PROPERTIES, badgeStyles } from "@/lib/properties";
+import { getProperty, PROPERTIES, badgeStyles, type Property } from "@/lib/properties";
 
 export const Route = createFileRoute("/property/$id")({
   loader: ({ params }) => {
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/property/$id")({
 });
 
 function Detail() {
-  const { property: p } = Route.useLoaderData();
+  const { property: p } = Route.useLoaderData() as { property: Property };
   const gap = p.estValue - p.price;
   const gapPct = ((gap / p.price) * 100).toFixed(1);
   const related = PROPERTIES.filter((x) => x.id !== p.id).slice(0, 3);
