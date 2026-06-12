@@ -8,9 +8,9 @@ export const Route = createFileRoute("/")({
 });
 
 const TABS = [
-  { id: "buy", label: "Buy/Rent Direct", sub: "For buyers seeking zero-commission homes" },
-  { id: "deals", label: "Find Discounted Deals", sub: "For investors hunting BMV & high-yield" },
-  { id: "agency", label: "Agency Hub", sub: "For UK estate agents managing portfolios" },
+  { id: "buy", label: "🏡 I want to buy", sub: "Find a home directly from owners — no agent fees." },
+  { id: "deals", label: "💰 I want to invest", sub: "Discover below-market deals with high rental returns." },
+  { id: "agency", label: "🏢 I'm an agent", sub: "List and manage your portfolio with one connection." },
 ] as const;
 
 function Home() {
@@ -29,11 +29,11 @@ function Home() {
             <span className="inline-flex items-center gap-2 rounded-full border border-navy/10 bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-navy/60">
               <span className="size-1.5 rounded-full bg-teal animate-pulse" /> UK Land Registry • Live Sync
             </span>
-            <h1 className="mx-auto mt-6 max-w-4xl text-balance text-5xl font-extrabold leading-[1.05] tracking-tight md:text-7xl">
-              The Ultimate 360° <span className="text-teal">UK Property</span> Hub.
+            <h1 className="mx-auto mt-6 max-w-4xl text-balance text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl md:text-7xl">
+              Find your next <span className="text-teal">UK property</span> in minutes.
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg font-medium text-navy/60">
-              Direct P2P listings meets next-gen AI sourcing. Transparent, zero-commission data at your fingertips — from first-time buyers to professional portfolio investors.
+            <p className="mx-auto mt-6 max-w-2xl text-pretty text-base font-medium text-navy/60 md:text-lg">
+              Whether you're buying your first home or your tenth investment — we make it simple. No agent fees, no jargon, just the right deals.
             </p>
           </div>
 

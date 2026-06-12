@@ -14,12 +14,12 @@ export const Route = createFileRoute("/search")({
 });
 
 const FILTERS = [
-  { id: "bmv", label: "⚡ BMV Deals", cls: "bg-gold/10 text-gold border-gold/30", activeCls: "bg-gold text-white border-gold" },
-  { id: "knot", label: "⚠️ Knotweed Issues", cls: "bg-red-50 text-red-600 border-red-200", activeCls: "bg-red-600 text-white border-red-600" },
-  { id: "lease", label: "⏳ Short Leasehold", cls: "bg-white text-teal border-teal/40", activeCls: "bg-teal text-white border-teal" },
-  { id: "neg", label: "📉 Negative Equity", cls: "bg-white text-navy border-navy/30", activeCls: "bg-navy text-white border-navy" },
-  { id: "hmo", label: "🏠 HMO Potential", cls: "bg-white text-navy/70 border-navy/15", activeCls: "bg-navy text-white border-navy" },
-  { id: "chain", label: "🔗 Chain Free", cls: "bg-white text-navy/70 border-navy/15", activeCls: "bg-navy text-white border-navy" },
+  { id: "bmv", label: "⚡ Below market price", cls: "bg-gold/10 text-gold border-gold/30", activeCls: "bg-gold text-white border-gold" },
+  { id: "knot", label: "⚠️ Has known issues", cls: "bg-red-50 text-red-600 border-red-200", activeCls: "bg-red-600 text-white border-red-600" },
+  { id: "lease", label: "⏳ Short lease (<80 yrs)", cls: "bg-white text-teal border-teal/40", activeCls: "bg-teal text-white border-teal" },
+  { id: "neg", label: "📉 Worth less than paid", cls: "bg-white text-navy border-navy/30", activeCls: "bg-navy text-white border-navy" },
+  { id: "hmo", label: "🏠 Good for sharing (HMO)", cls: "bg-white text-navy/70 border-navy/15", activeCls: "bg-navy text-white border-navy" },
+  { id: "chain", label: "🔗 No chain — quick sale", cls: "bg-white text-navy/70 border-navy/15", activeCls: "bg-navy text-white border-navy" },
 ] as const;
 
 function Search() {
