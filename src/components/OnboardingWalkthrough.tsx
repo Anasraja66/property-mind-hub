@@ -34,23 +34,78 @@ const CTA: Record<Role, { to: string; label: string }> = {
   agent: { to: "/dashboard/agent", label: "Open agent hub" },
 };
 
-const STORAGE_KEY = "myinvestin.onboarded.v1";
+const STORAGE_KEY = "myinvestin.onboarding.v2";
+
+interface OnboardingState {
+  role: Role | null;
+  step: number;
+  completed: boolean;
+}
+
+function readState(): OnboardingState | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as OnboardingState;
+    if (
+      parsed &&
+      typeof parsed.completed === "boolean" &&
+      typeof parsed.step === "number" &&
+      (parsed.role === null || ["buyer", "seller", "agent"].includes(parsed.role))
+    ) {
+      return parsed;
+    }
+  } catch {
+    // ignore corrupt storage
+  }
+  return null;
+}
+
+function writeState(state: OnboardingState) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
 
 export function OnboardingWalkthrough() {
-  const [open, setOpen] = useState(false);
-  const [role, setRole] = useState<Role | null>(null);
-  const [step, setStep] = useState(0);
+  const saved = readState();
+  const [open, setOpen] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const s = readState();
+    // auto-open on first visit or if a role walkthrough was left incomplete
+    return !s || (!s.completed && s.role !== null);
+  });
+  const [role, setRole] = useState<Role | null>(saved?.role ?? null);
+  const [step, setStep] = useState(saved?.step ?? 0);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (!localStorage.getItem(STORAGE_KEY)) {
+    const s = readState();
+    // first visit: no saved state at all
+    if (!s) {
+      const t = setTimeout(() => setOpen(true), 600);
+      return () => clearTimeout(t);
+    }
+    // resume an in-progress role walkthrough
+    if (!s.completed && s.role !== null) {
       const t = setTimeout(() => setOpen(true), 600);
       return () => clearTimeout(t);
     }
   }, []);
 
+  // persist progress whenever role or step changes (only when inside a role walkthrough)
+  useEffect(() => {
+    if (role !== null) {
+      writeState({ role, step, completed: false });
+    }
+  }, [role, step]);
+
+  const markCompleted = () => {
+    writeState({ role, step, completed: true });
+  };
+
   const close = () => {
-    localStorage.setItem(STORAGE_KEY, "1");
+    markCompleted();
     setOpen(false);
     setRole(null);
     setStep(0);
